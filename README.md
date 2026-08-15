@@ -15,11 +15,14 @@ src/        Tailwind source, plus the local preview server
 ## Working on it
 
 ```
-bun install
+direnv allow    # once, then the environment loads on cd
+
 bun run dev     # rebuilds public/assets/css/site.css on change
 bun run serve   # preview on http://localhost:8000
 bun run build   # minified build
 ```
+
+The toolchain is pinned with devbox: bun, git, actionlint and imagemagick. With direnv it loads on entering the directory; otherwise `devbox shell` does the same thing. Either way, dependencies install on entry if `node_modules` is missing. Without devbox, `bun install` plus a local Bun is all the site itself needs. `actionlint` checks the deployment workflow, and `imagemagick` is there for turning the photographs into WebP once the shoot happens.
 
 `bun` only compiles the stylesheet and runs the preview server. The site itself is plain HTML, CSS and one JavaScript file, with no runtime dependencies and nothing to install for a visitor.
 
