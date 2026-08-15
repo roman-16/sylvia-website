@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1600" viewBox="0 0 2400 1600" role="img">
+  <rect width="2400" height="1600" fill="#C7BCAB"/>
+  <rect x="48" y="48" width="2304" height="1504" fill="none" stroke="#1C1A17" stroke-opacity=".22" stroke-width="3"/>
+  <g fill="#1C1A17" fill-opacity=".5" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
+    <text x="1200" y="784" font-size="80" letter-spacing="8.0">ATELIER</text>
+    <text x="1200" y="880" font-size="42" letter-spacing="5.9">Pinsel, Palette, Zwischenstand</text>
+    <text x="1200" y="952" font-size="42" fill-opacity=".65" letter-spacing="5.9">PLATZHALTER</text>
+  </g>
+</svg>

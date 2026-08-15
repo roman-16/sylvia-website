@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600" role="img">
+  <rect width="1200" height="1600" fill="#C7B4BE"/>
+  <rect x="34" y="34" width="1132" height="1532" fill="none" stroke="#1C1A17" stroke-opacity=".26" stroke-width="2"/>
+  <g fill="#1C1A17" fill-opacity=".6" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
+    <text x="600" y="788" font-size="66">Chrome II</text>
+    <text x="600" y="866" font-size="34" letter-spacing="5.4">40 × 50 cm</text>
+    <text x="600" y="926" font-size="34" fill-opacity=".68" letter-spacing="5.4">PLATZHALTER</text>
+  </g>
+</svg>

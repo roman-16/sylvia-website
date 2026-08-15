@@ -1,0 +1,14 @@
+{
+  "name": "sylvia-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tailwindcss --input src/tailwind.css --output public/assets/css/site.css --minify",
+    "dev": "tailwindcss --input src/tailwind.css --output public/assets/css/site.css --watch",
+    "serve": "bun src/serve.js"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

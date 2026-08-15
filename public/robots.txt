@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sylviapasmangiu.com/sitemap.xml

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1600" viewBox="0 0 1280 1600" role="img">
+  <rect width="1280" height="1600" fill="#C9C4BC"/>
+  <rect x="36" y="36" width="1208" height="1528" fill="none" stroke="#1C1A17" stroke-opacity=".26" stroke-width="2"/>
+  <g fill="#1C1A17" fill-opacity=".6" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
+    <text x="640" y="787" font-size="70">The Power</text>
+    <text x="640" y="870" font-size="36" letter-spacing="5.8">40 × 50 cm</text>
+    <text x="640" y="934" font-size="36" fill-opacity=".68" letter-spacing="5.8">PLATZHALTER</text>
+  </g>
+</svg>
