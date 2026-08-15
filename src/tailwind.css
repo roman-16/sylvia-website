@@ -142,6 +142,14 @@
     max-width: 100%;
     height: auto;
   }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: default;
+  }
 }
 
 @layer components {
