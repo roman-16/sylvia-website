@@ -166,6 +166,8 @@ const setUpGallery = () => {
   let visible = works;
   let index = 0;
 
+  const roomForOverlay = window.matchMedia("(min-width: 48rem)");
+
   const renderCount = () => {
     if (counter) counter.textContent = phrase("workCount", visible.length);
   };
@@ -188,8 +190,101 @@ const setUpGallery = () => {
     position.textContent = `${String(index + 1).padStart(2, "0")} / ${String(visible.length).padStart(2, "0")}`;
   };
 
+  let scale = 1;
+  let panX = 0;
+  let panY = 0;
+
+  const drawTransform = () => {
+    image.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+    dialog.classList.toggle("is-zoomed", scale > 1);
+  };
+
+  const naturalScale = () =>
+    image.offsetWidth > 0 ? Math.min(Math.max(image.naturalWidth / image.offsetWidth, 1), 4) : 1;
+
+  const clampPan = () => {
+    const slackX = Math.max(0, (image.offsetWidth * scale - window.innerWidth) / 2);
+    const slackY = Math.max(0, (image.offsetHeight * scale - window.innerHeight) / 2);
+    panX = Math.min(Math.max(panX, -slackX), slackX);
+    panY = Math.min(Math.max(panY, -slackY), slackY);
+  };
+
+  const resetZoom = () => {
+    scale = 1;
+    panX = 0;
+    panY = 0;
+    drawTransform();
+  };
+
+  const zoomAround = (next, clientX, clientY) => {
+    const box = image.getBoundingClientRect();
+    const restingX = box.left + box.width / 2 - panX;
+    const restingY = box.top + box.height / 2 - panY;
+    const factor = next / scale;
+
+    panX = clientX - restingX - factor * (clientX - restingX - panX);
+    panY = clientY - restingY - factor * (clientY - restingY - panY);
+    scale = next;
+
+    clampPan();
+    drawTransform();
+  };
+
+  let dragged = false;
+
+  image.addEventListener("click", (event) => {
+    if (dragged) {
+      dragged = false;
+      return;
+    }
+    if (scale > 1) resetZoom();
+    else zoomAround(naturalScale(), event.clientX, event.clientY);
+  });
+
+  image.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      const next = Math.min(Math.max(scale * (event.deltaY < 0 ? 1.2 : 1 / 1.2), 1), 4);
+      if (next === 1) resetZoom();
+      else zoomAround(next, event.clientX, event.clientY);
+    },
+    { passive: false },
+  );
+
+  image.addEventListener("pointerdown", (event) => {
+    if (scale === 1) return;
+
+    const fromX = event.clientX - panX;
+    const fromY = event.clientY - panY;
+    const startX = event.clientX;
+    const startY = event.clientY;
+    image.setPointerCapture(event.pointerId);
+    dialog.classList.add("is-panning");
+
+    const move = (moved) => {
+      if (Math.hypot(moved.clientX - startX, moved.clientY - startY) > 4) dragged = true;
+      panX = moved.clientX - fromX;
+      panY = moved.clientY - fromY;
+      clampPan();
+      drawTransform();
+    };
+
+    const drop = () => {
+      dialog.classList.remove("is-panning");
+      image.removeEventListener("pointermove", move);
+      image.removeEventListener("pointerup", drop);
+      image.removeEventListener("pointercancel", drop);
+    };
+
+    image.addEventListener("pointermove", move);
+    image.addEventListener("pointerup", drop);
+    image.addEventListener("pointercancel", drop);
+  });
+
   const open = (work) => {
     index = Math.max(0, visible.indexOf(work));
+    resetZoom();
     renderSlide();
     if (!dialog.open) dialog.showModal();
     document.documentElement.classList.add("is-locked");
@@ -197,6 +292,7 @@ const setUpGallery = () => {
 
   const step = (delta) => {
     index = (index + delta + visible.length) % visible.length;
+    resetZoom();
     renderSlide();
   };
 
@@ -216,9 +312,13 @@ const setUpGallery = () => {
   for (const work of works) {
     work.querySelector(".work__frame").addEventListener("click", (event) => {
       event.preventDefault();
-      open(work);
+      if (roomForOverlay.matches) open(work);
     });
   }
+
+  roomForOverlay.addEventListener("change", () => {
+    if (!roomForOverlay.matches && dialog.open) dialog.close();
+  });
 
   dialog.querySelector("[data-lb-prev]").addEventListener("click", () => step(-1));
   dialog.querySelector("[data-lb-next]").addEventListener("click", () => step(1));
@@ -264,6 +364,7 @@ const setUpGallery = () => {
       const shiftY = touch.clientY - touchOrigin.y;
       touchOrigin = null;
 
+      if (scale > 1) return;
       if (Math.abs(shiftX) < 45 || Math.abs(shiftX) <= Math.abs(shiftY)) return;
 
       step(shiftX < 0 ? 1 : -1);
@@ -344,9 +445,7 @@ const setUpContact = () => {
     for (const option of [...select.options].slice(1)) option.remove();
 
     for (const work of document.querySelectorAll(".work")) {
-      const number = work.querySelector(".work__nr").textContent.trim();
-      const title = work.querySelector(".work__title").textContent.trim();
-      select.append(new Option(`${number} · ${title}`, work.dataset.slug));
+      select.append(new Option(work.querySelector(".work__title").textContent.trim(), work.dataset.slug));
     }
     select.value = keep;
   };
@@ -358,8 +457,8 @@ const setUpContact = () => {
   const composeSubject = () => {
     const topic = chosenTopic();
     if (topic === "work") {
-      const label = select.selectedOptions[0]?.value ? select.selectedOptions[0].textContent.trim() : "piece not specified";
-      return `Enquiry: ${label}`;
+      const chosen = select.selectedOptions[0];
+      return `Enquiry: ${chosen?.value ? chosen.textContent.trim() : "piece not specified"}`;
     }
     return topic === "commission" ? "Enquiry: Commission" : "Enquiry: General";
   };

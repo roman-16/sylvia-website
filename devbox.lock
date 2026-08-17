@@ -156,8 +156,8 @@
       }
     },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2026-08-13T03:55:42Z",
-      "resolved": "github:NixOS/nixpkgs/6b5e5b7a6631f065bf6908986990b37d845f847f?lastModified=1786593342&narHash=sha256-smTKQXMLLStzc8zJevMCckbk3My7SvbbLmPYZUJJKW4%3D"
+      "last_modified": "2026-08-16T05:26:56Z",
+      "resolved": "github:NixOS/nixpkgs/54ba4bcec4043e72a4006d825e0d7aff5562008f?lastModified=1786858016&narHash=sha256-Vczr2zxD0orq6N2QQe5uqOGF7TRDcQJRRuAcsdHr4kg%3D"
     },
     "imagemagick@latest": {
       "last_modified": "2026-08-08T22:24:59Z",

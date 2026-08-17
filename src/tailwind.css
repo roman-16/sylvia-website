@@ -79,7 +79,7 @@
 @layer base {
   :root {
     color-scheme: light;
-    --gutter: clamp(1.5rem, 5vw, 4rem);
+    --gutter: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
     --bay: clamp(6rem, 12vw, 11rem);
   }
 
@@ -341,6 +341,7 @@
     inset-block-start: 0;
     inset-inline: 0;
     z-index: 50;
+    padding-block-start: env(safe-area-inset-top, 0px);
     color: var(--color-bone);
     transition: background-color 250ms var(--ease-room), color 250ms var(--ease-room),
       box-shadow 250ms var(--ease-room), backdrop-filter 250ms var(--ease-room);
@@ -439,7 +440,8 @@
     overflow: hidden;
     background-color: var(--color-char);
     color: var(--color-bone);
-    padding-block: 9rem 2.25rem;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 5.5rem)
+      calc(env(safe-area-inset-bottom, 0px) + 2.25rem);
   }
 
   .hero__glow {
@@ -451,18 +453,26 @@
 
   .hero__art {
     position: relative;
+    flex: 1;
+    min-height: 8rem;
     width: 100%;
     pointer-events: none;
   }
 
+  .hero__art picture {
+    display: contents;
+  }
+
   .hero__art img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     opacity: 0.5;
   }
 
   .hero__inner {
     position: relative;
-    margin-block-start: auto;
+    margin-block-start: 2.5rem;
   }
 
   .hero__name {
@@ -519,7 +529,14 @@
     gap: 1.5rem 3rem;
   }
 
-  .section-head__no {
+  .section-head__meta {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+
+  .section-head__no,
+  .about__year {
     color: var(--color-ash);
   }
 
@@ -558,7 +575,7 @@
     overflow: hidden;
     background-color: var(--color-char);
     color: var(--color-bone);
-    padding-block: 5rem 3rem;
+    padding-block: 5rem calc(env(safe-area-inset-bottom, 0px) + 3rem);
   }
 
   .footer__glow {
@@ -612,6 +629,11 @@
     display: block;
     overflow: hidden;
     background-color: var(--color-oat);
+    cursor: default;
+  }
+
+  .work__price {
+    color: var(--color-ink);
   }
 
   .work__frame img {
@@ -625,10 +647,6 @@
 
   .work__caption {
     margin-block-start: 1.125rem;
-  }
-
-  .work__nr {
-    color: var(--color-ash);
   }
 
   .work__title {
@@ -745,6 +763,19 @@
     width: auto;
     object-fit: contain;
     box-shadow: var(--shadow-lifted);
+    cursor: zoom-in;
+    touch-action: none;
+    transform-origin: center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .lightbox.is-zoomed .lightbox__figure img {
+    cursor: grab;
+  }
+
+  .lightbox.is-panning .lightbox__figure img {
+    cursor: grabbing;
   }
 
   .lightbox__caption {
@@ -758,6 +789,14 @@
 
   .lightbox__count {
     color: color-mix(in srgb, var(--color-bone) 52%, transparent);
+  }
+
+  .lightbox .enquire {
+    color: color-mix(in srgb, var(--color-bone) 62%, transparent);
+  }
+
+  .lightbox .enquire:hover {
+    color: var(--color-bone);
   }
 
   .lightbox__meta {
@@ -821,13 +860,7 @@
     width: 100%;
   }
 
-  .band__caption {
-    background-color: var(--color-sand);
-    color: var(--color-ash);
-    padding: 1.125rem var(--gutter);
-  }
-
-  .about {
+    .about {
     background-color: var(--color-clay-wash);
   }
 
@@ -859,41 +892,7 @@
     text-wrap: balance;
   }
 
-  .now {
-    margin-block-start: clamp(2rem, 4vw, 3rem);
-  }
-
-  .now__label {
-    color: var(--color-clay);
-    margin-block-end: 0.375rem;
-  }
-
-  .process {
-    background-color: var(--color-oat);
-  }
-
-  .steps {
-    display: grid;
-    gap: 0;
-    margin-block-start: clamp(3rem, 6vw, 4.5rem);
-  }
-
-  .step {
-    border-block-start: 1px solid var(--color-line);
-    padding-block: 1.75rem;
-  }
-
-  .step__no {
-    color: var(--color-ash);
-  }
-
-  .step__title {
-    margin-block: 0.5rem 0.625rem;
-    font-size: 1.375rem;
-    line-height: 1.2;
-  }
-
-  .commission {
+                .commission {
     display: grid;
     gap: 2.5rem;
     margin-block-start: clamp(2.5rem, 5vw, 4rem);
@@ -1125,6 +1124,10 @@
 }
 
 @media (max-width: 47.99rem) {
+  .hero {
+    height: 100svh;
+  }
+
   .site-nav {
     display: none;
   }
@@ -1156,6 +1159,10 @@
 }
 
 @media (min-width: 48rem) {
+  .work__frame {
+    cursor: zoom-in;
+  }
+
   .section-head {
     grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
   }
@@ -1166,12 +1173,7 @@
     align-items: center;
   }
 
-  .steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 2.5rem;
-  }
-
-  .commission {
+    .commission {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(2.5rem, 5vw, 4.5rem);
   }
@@ -1197,12 +1199,7 @@
 }
 
 @media (min-width: 64rem) {
-  .steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 2rem;
-  }
-
-  .about__grid {
+    .about__grid {
     grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
   }
 
@@ -1240,13 +1237,20 @@
     position: absolute;
     inset-block: 0;
     inset-inline: 53% -12%;
+    flex: none;
     width: auto;
     display: flex;
     align-items: center;
   }
 
   .hero__art img {
+    height: auto;
+    object-fit: contain;
     opacity: 1;
+  }
+
+  .hero__inner {
+    margin-block-start: 0;
   }
 
   .hero__inner {
