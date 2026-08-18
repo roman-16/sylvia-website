@@ -97,6 +97,99 @@
         }
       }
     },
+    "gcc-unwrapped@latest": {
+      "last_modified": "2026-08-08T22:24:59Z",
+      "resolved": "github:NixOS/nixpkgs/fe6deff5fad4a42d0e08d2bab3f2d6c7c88f3fe5#gcc-unwrapped",
+      "source": "devbox-search",
+      "version": "15.3.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/lxmsnrxqd2zxv9krdk0qpd954y5piqq3-gcc-15.3.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/52ln6jj091gyzhadr0nycrs26ssx3jzq-gcc-15.3.0-man",
+              "default": true
+            },
+            {
+              "name": "info",
+              "path": "/nix/store/xg8nfpdm9r6gga9a230x2brwp2cwwgxf-gcc-15.3.0-info"
+            },
+            {
+              "name": "lib",
+              "path": "/nix/store/dw29abk601bjprxrmdslgxss9ig3jn2w-gcc-15.3.0-lib"
+            }
+          ],
+          "store_path": "/nix/store/lxmsnrxqd2zxv9krdk0qpd954y5piqq3-gcc-15.3.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/j42vsm6399bgls7f19zjrarnhrmz7p36-gcc-15.3.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/lrlpssd275xk7gkd8pckj18k5d52v8lv-gcc-15.3.0-man",
+              "default": true
+            },
+            {
+              "name": "libgcc",
+              "path": "/nix/store/80s79pkq7s6phd3j1vh46if2dnapv3y6-gcc-15.3.0-libgcc"
+            },
+            {
+              "name": "checksum",
+              "path": "/nix/store/5p7zy8r8dnkql9rfcwxxmm3yi7wrpksr-gcc-15.3.0-checksum"
+            },
+            {
+              "name": "info",
+              "path": "/nix/store/0fjrz2phhfnh29xwmv8dqrwbbnvkw51v-gcc-15.3.0-info"
+            },
+            {
+              "name": "lib",
+              "path": "/nix/store/6dfx62681yijibaha2pqdwlinhxld4vl-gcc-15.3.0-lib"
+            }
+          ],
+          "store_path": "/nix/store/j42vsm6399bgls7f19zjrarnhrmz7p36-gcc-15.3.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/qrn789mrv652j7f5bcjp367npzpcyvdi-gcc-15.3.0",
+              "default": true
+            },
+            {
+              "name": "man",
+              "path": "/nix/store/rjx1nz5fhz9p0l3m4kh7h3gir4z59fcs-gcc-15.3.0-man",
+              "default": true
+            },
+            {
+              "name": "checksum",
+              "path": "/nix/store/03h70vfcbqdcq6x0ha6f85vvsx25llgb-gcc-15.3.0-checksum"
+            },
+            {
+              "name": "info",
+              "path": "/nix/store/5nm743biq025nv8jac4dy0dvv5fsbqqz-gcc-15.3.0-info"
+            },
+            {
+              "name": "lib",
+              "path": "/nix/store/w2nk3f7prwzpm6h13rfxh8lh46yfdysj-gcc-15.3.0-lib"
+            },
+            {
+              "name": "libgcc",
+              "path": "/nix/store/hmi4qvjrcdvzsing2l56ybcwb6hkmf6y-gcc-15.3.0-libgcc"
+            }
+          ],
+          "store_path": "/nix/store/qrn789mrv652j7f5bcjp367npzpcyvdi-gcc-15.3.0"
+        }
+      }
+    },
     "git@latest": {
       "last_modified": "2026-08-01T16:34:20Z",
       "resolved": "github:NixOS/nixpkgs/a5cbcfe954791221bfffe2307f7d1a1bf61a871e#git",
@@ -218,6 +311,54 @@
             }
           ],
           "store_path": "/nix/store/h74lg8wfwndnf5glr171kmcshlffi7l2-imagemagick-7.1.2-29"
+        }
+      }
+    },
+    "watchman@latest": {
+      "last_modified": "2026-08-01T16:34:20Z",
+      "resolved": "github:NixOS/nixpkgs/a5cbcfe954791221bfffe2307f7d1a1bf61a871e#watchman",
+      "source": "devbox-search",
+      "version": "2026.01.19.00",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/6y7y3p9y22zbkjk6m5im8aplrc2l7iq4-watchman-2026.01.19.00",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/6y7y3p9y22zbkjk6m5im8aplrc2l7iq4-watchman-2026.01.19.00"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/l7pif8qwql281zrf2qldrrrw0z561k48-watchman-2026.01.19.00",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/l7pif8qwql281zrf2qldrrrw0z561k48-watchman-2026.01.19.00"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/zw8ss32qjp8g8ankkaqp757r3flwk64q-watchman-2026.01.19.00",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/zw8ss32qjp8g8ankkaqp757r3flwk64q-watchman-2026.01.19.00"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/z270n57jg23sisain7jwwj4y1j2bhdg8-watchman-2026.01.19.00",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/z270n57jg23sisain7jwwj4y1j2bhdg8-watchman-2026.01.19.00"
         }
       }
     }

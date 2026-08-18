@@ -6,7 +6,7 @@ Static website for the painter Sylvia Pasmangiu. Three pages, no framework, no r
 
 ```
 public/     everything that gets served, and nothing else
-src/        Tailwind source, plus the local preview server
+src/        Tailwind source
 originals/  the photographs the gallery images are made from
 .github/    deployment workflow
 ```
@@ -18,18 +18,21 @@ originals/  the photographs the gallery images are made from
 ```
 direnv allow    # once, then the environment loads on cd
 
-bun run dev     # rebuilds public/assets/css/site.css on change
-bun run serve   # preview on http://localhost:8000
+bun run dev     # watches the stylesheet and serves public/ on http://localhost:3000
 bun run build   # minified build
 ```
 
-The toolchain is pinned with devbox: bun, git, actionlint and imagemagick. With direnv it loads on entering the directory; otherwise `devbox shell` does the same thing. Either way, dependencies install on entry if `node_modules` is missing. Without devbox, `bun install` plus a local Bun is all the site itself needs. `actionlint` checks the deployment workflow, and `imagemagick` is there for turning the photographs into WebP once the shoot happens.
+`bun run dev` runs two things at once: Tailwind rebuilding `public/assets/css/site.css` on change, and `serve` publishing `public/`. Ctrl-C stops both. It refuses to start if port 3000 is taken rather than quietly moving to another one, because a preview server on an unexpected port is how you end up reading a stale page.
 
-`bun` only compiles the stylesheet and runs the preview server. The site itself is plain HTML, CSS and one JavaScript file, with no runtime dependencies and nothing to install for a visitor.
+`serve` is given `public` and nothing else. Do not pass it `--config`: it resolves the path inconsistently and ends up publishing the repository root, which puts `README.md`, `originals/` and `src/` on a public port. The cost of leaving the config off is that `serve` redirects `/impressum.html` to `/impressum`, which GitHub Pages does not do. Local cosmetics only.
 
-`bun run serve` is `src/serve.js`, about twenty lines on top of `Bun.serve`. It serves `public/` verbatim with correct MIME types, so what you see locally is exactly what deploys. Set `PORT` to use a different port.
+The toolchain is pinned with devbox: bun, git, actionlint, imagemagick, gcc-unwrapped and watchman. With direnv it loads on entering the directory; otherwise `devbox shell` does the same thing. Either way, dependencies install on entry if `node_modules` is missing. `actionlint` checks the deployment workflow and `imagemagick` turns the photographs into WebP.
 
-**Preview with `bun run serve`, not by double-clicking `index.html`.** Opening the file directly gives it a `file://` origin, where CORS does not exist, so the two font preloads fail and log errors in the console. The page still renders correctly with the real fonts, but the console noise is misleading. Those preloads carry `crossorigin` because browsers fetch fonts from CSS in anonymous-CORS mode, and the preload has to match or the font gets downloaded twice.
+`gcc-unwrapped` and `watchman` exist only so Tailwind's `--watch` works. Its file watcher needs `libstdc++.so.6`, which a devbox environment does not otherwise provide, and the init hook puts the package library directory on `LD_LIBRARY_PATH` so the watcher can load it. Without those, `--watch` dies at startup with `ERR_DLOPEN_FAILED`. If the stylesheet ever stops updating, run `bun run build` by hand and check that hook ran.
+
+The site itself is plain HTML, CSS and one JavaScript file, with no runtime dependencies and nothing to install for a visitor. Bun and `serve` are build and preview tooling; neither reaches production. `serve` is a Node program, so it only runs through `bun run`, which supplies the `node` shim that the devbox environment lacks.
+
+**Preview with `bun run dev`, not by double-clicking `index.html`.** Opening the file directly gives it a `file://` origin, where CORS does not exist, so the two font preloads fail and log errors in the console. The page still renders correctly with the real fonts, but the console noise is misleading. Those preloads carry `crossorigin` because browsers fetch fonts from CSS in anonymous-CORS mode, and the preload has to match or the font gets downloaded twice.
 
 ## Deployment
 
@@ -68,18 +71,25 @@ When a piece sells, swap its `tag--available` span for `<span class="tag tag--so
 
 Pieces are dated by year alone. Canvas sizes are written width × height, so a portrait canvas reads `30 × 40 cm` even when it is spoken of as a forty by thirty. Prices are shown in full: `€530` in English, `530 €` in German.
 
-**Correcting a photograph.** A phone is never exactly square-on to a canvas, so the photograph keystones and opposite edges of the painting come out different lengths. Cropping cannot fix that, because the shape is wrong rather than the framing. Map the four canvas corners onto a rectangle instead:
+**Correcting a photograph.** A phone is never exactly square-on to a canvas, so the photograph keystones and opposite edges of the painting come out different lengths. Cropping cannot fix that, because the shape is wrong rather than the framing.
 
-```
-magick originals/paintings/panther.jpeg -auto-orient -virtual-pixel none \
-  -set option:distort:viewport 2000x1000+0+0 \
-  -distort Perspective '597,750 0,0  3593,770 2000,0  3581,2270 2000,1000  605,2206 0,1000' \
-  -shave 3x3 -resize 2000x1000! -quality 82 public/assets/works/06-panther.webp
-```
+A four-corner perspective map is the obvious answer and it is not enough. It maps straight lines to straight lines, so it cannot correct two things that are present in these photographs: the phone's mild barrel distortion, and canvases that are physically bowed on their stretchers. Two paintings shot in the same frame wanted opposite lens corrections, which is how you can tell the bow is in the canvas rather than the optics.
 
-The pairs are each source corner followed by where it should land, clockwise from top left. Pick an output size matching the canvas proportions, and check no wall survives along any edge - a strip one or two pixels wide is interpolation and is what `-shave` removes.
+What produced the images in `public/assets/works/` was, per painting:
 
-The viewport matters: without it the result is clipped to the source photograph's dimensions, which silently crops the output whenever the target is larger than the original.
+1. Detect the canvas boundary in the source photograph by walking the intensity gradient inward along each edge.
+2. Sample around sixty points around that boundary rather than just the four corners.
+3. Fit a cubic polynomial mapping those points onto a true rectangle, and render it with `magick -distort Polynomial`. This absorbs perspective, lens and canvas bow together.
+4. Inset each edge independently until no wall survives, checking each edge separately - a single average across an edge hides a wedge of wall at one end.
+5. Convert with `-strip -quality 82 -define webp:method=6`.
+
+Insets must be per-edge and per-painting, because each photograph has its own magnification. On a canvas rendered at 2000x1000 from a source where it measured 740x360, one source pixel of inset costs nearly three output pixels, which is enough to cut a signature off the bottom edge.
+
+Check the result along every edge before shipping it. A brightness test alone will miss an edge that is *darker* than the painting, which is what a canvas edge in shadow looks like.
+
+If you use `-distort` directly, set `-set option:distort:viewport WxH+0+0`. Without it the result is clipped to the source photograph's dimensions, silently cropping the output whenever the target is larger than the original.
+
+**Strip metadata.** Phone photographs carry EXIF. `-strip` removes it. The images shipped before this was noticed still carry roughly 1.4 KB each; there is no GPS in them.
 
 Everything else follows on its own. The filter, the counter, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync.
 

@@ -1,13 +1,21 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.5/.schema/devbox.schema.json",
   "packages": {
-    "actionlint":  "latest",
-    "bun":         "latest",
-    "git":         "latest",
-    "imagemagick": "latest"
+    "actionlint": "latest",
+    "bun": "latest",
+    "gcc-unwrapped": {
+      "version": "latest",
+      "outputs": [
+        "lib"
+      ]
+    },
+    "git": "latest",
+    "imagemagick": "latest",
+    "watchman": "latest"
   },
   "shell": {
     "init_hook": [
+      "export LD_LIBRARY_PATH=\"$DEVBOX_PACKAGES_DIR/lib:${LD_LIBRARY_PATH:-}\"",
       "[ -d node_modules ] || bun install"
     ]
   }
