@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img">
-  <rect width="1200" height="1500" fill="#CFC4B4"/>
-  <rect x="36" y="36" width="1128" height="1428" fill="none" stroke="#1C1A17" stroke-opacity=".22" stroke-width="2"/>
-  <g fill="#1C1A17" fill-opacity=".5" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
-    <text x="600" y="738" font-size="60" letter-spacing="6.0">PORTRÄT</text>
-    <text x="600" y="810" font-size="31" letter-spacing="4.3">Sylvia</text>
-    <text x="600" y="864" font-size="31" fill-opacity=".65" letter-spacing="4.3">PLATZHALTER</text>
-  </g>
-</svg>

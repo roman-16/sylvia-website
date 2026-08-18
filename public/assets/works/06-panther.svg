@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1000" viewBox="0 0 2000 1000" role="img">
-  <rect width="2000" height="1000" fill="#12141B"/>
-  <rect x="28" y="28" width="1944" height="944" fill="none" stroke="#F7F3EB" stroke-opacity=".26" stroke-width="2"/>
-  <g fill="#F7F3EB" fill-opacity=".6" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
-    <text x="1000" y="490" font-size="55">Panther</text>
-    <text x="1000" y="555" font-size="28" letter-spacing="4.5">100 × 50 cm</text>
-    <text x="1000" y="605" font-size="28" fill-opacity=".68" letter-spacing="4.5">PLATZHALTER</text>
-  </g>
-</svg>

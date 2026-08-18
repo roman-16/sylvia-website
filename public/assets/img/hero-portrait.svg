@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img">
-  <rect width="1200" height="1500" fill="#12141B"/>
-  <rect x="34" y="34" width="1132" height="1432" fill="none" stroke="#F7F3EB" stroke-opacity=".26" stroke-width="2"/>
-  <g fill="#F7F3EB" fill-opacity=".6" font-family="IBM Plex Mono, ui-monospace, monospace" text-anchor="middle">
-    <text x="600" y="738" font-size="66">Panther</text>
-    <text x="600" y="810" font-size="34" letter-spacing="5.4">HOCHFORMAT-AUSSCHNITT</text>
-    <text x="600" y="870" font-size="34" fill-opacity=".68" letter-spacing="5.4">PLATZHALTER</text>
-  </g>
-</svg>

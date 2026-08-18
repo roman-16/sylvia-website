@@ -445,6 +445,7 @@ const setUpContact = () => {
     for (const option of [...select.options].slice(1)) option.remove();
 
     for (const work of document.querySelectorAll(".work")) {
+      if (work.querySelector(".tag--sold")) continue;
       select.append(new Option(work.querySelector(".work__title").textContent.trim(), work.dataset.slug));
     }
     select.value = keep;
@@ -529,9 +530,9 @@ const setUpStructuredData = () => {
       artform: "Painting",
       artMedium: work.dataset.medium,
       image: new URL(image.getAttribute("src"), location.href).href,
-      width: { "@type": "Distance", name: `${work.dataset.width} cm` },
-      height: { "@type": "Distance", name: `${work.dataset.height} cm` },
     };
+    if (work.dataset.width) entry.width = { "@type": "Distance", name: `${work.dataset.width} cm` };
+    if (work.dataset.height) entry.height = { "@type": "Distance", name: `${work.dataset.height} cm` };
     if (work.dataset.created) entry.dateCreated = work.dataset.created;
     if (image.alt) entry.description = image.alt;
     return entry;

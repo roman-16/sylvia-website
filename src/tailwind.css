@@ -860,6 +860,19 @@
     width: 100%;
   }
 
+  .insitu {
+    padding-block: clamp(1rem, 3vw, 2.5rem);
+    padding-inline: var(--gutter);
+  }
+
+  .insitu img {
+    width: 100%;
+    max-width: 32rem;
+    margin-inline: auto;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-placed);
+  }
+
   .about {
     background-color: var(--color-clay-wash);
   }

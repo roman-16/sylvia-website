@@ -7,6 +7,7 @@ Static website for the painter Sylvia Pasmangiu. Three pages, no framework, no r
 ```
 public/     everything that gets served, and nothing else
 src/        Tailwind source, plus the local preview server
+originals/  the photographs the gallery images are made from
 .github/    deployment workflow
 ```
 
@@ -54,27 +55,39 @@ One-time setup in the repository:
 
 `public/CNAME` keeps the custom domain in source so it survives redeploys.
 
-## Still to fill in
+## Selling
 
-| Placeholder | Where | What it needs |
-| --- | --- | --- |
-| `REPLACE_WITH_WEB3FORMS_ACCESS_KEY` | `public/index.html` | Free access key from web3forms.com, registered to `pasmangiusylvia@gmx.at`. Until it is set, the contact form fails gracefully and offers the email address instead. |
-| Trade register details | `public/impressum.html` | Whether a Gewerbeberechtigung applies, plus GISA number and VAT ID if so. Question for the WKO. |
-| `date to follow` | `public/index.html` | Signature dates for four pieces. |
-
-Every dimension in the gallery is a placeholder until the paintings are measured, and Elefanten is flagged as sold only to demonstrate that state.
+When a piece sells, swap its `tag--available` span for `<span class="tag tag--sold" data-de="Verkauft">Sold</span>`, delete its price and its Enquire button, and move its figure below the available pieces. The contact form drops sold pieces from its dropdown on its own.
 
 ## Adding a painting
 
-1. Put the photograph in `public/assets/works/` as `NN-slug.webp`, cropped to the canvas edge.
-2. Copy any `<figure class="work">` block in `public/index.html` and edit it.
-3. Set `data-slug`, `data-category` (`realistic`, `pop` or `abstract`), the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data.
+1. Put the photograph in `originals/paintings/`, named after the piece.
+2. Correct it to the canvas plane and write it to `public/assets/works/` as `NN-slug.webp`.
+3. Copy any `<figure class="work">` block in `public/index.html` and edit it.
+4. Set `data-slug`, `data-category` (`realistic`, `pop` or `abstract`), the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
+
+Pieces are dated by year alone. Canvas sizes are written width × height, so a portrait canvas reads `30 × 40 cm` even when it is spoken of as a forty by thirty. Prices are shown in full: `€530` in English, `530 €` in German.
+
+**Correcting a photograph.** A phone is never exactly square-on to a canvas, so the photograph keystones and opposite edges of the painting come out different lengths. Cropping cannot fix that, because the shape is wrong rather than the framing. Map the four canvas corners onto a rectangle instead:
+
+```
+magick originals/paintings/panther.jpeg -auto-orient -virtual-pixel none \
+  -set option:distort:viewport 2000x1000+0+0 \
+  -distort Perspective '597,750 0,0  3593,770 2000,0  3581,2270 2000,1000  605,2206 0,1000' \
+  -shave 3x3 -resize 2000x1000! -quality 82 public/assets/works/06-panther.webp
+```
+
+The pairs are each source corner followed by where it should land, clockwise from top left. Pick an output size matching the canvas proportions, and check no wall survives along any edge - a strip one or two pixels wide is interpolation and is what `-shave` removes.
+
+The viewport matters: without it the result is clipped to the source photograph's dimensions, which silently crops the output whenever the target is larger than the original.
 
 Everything else follows on its own. The filter, the counter, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync.
 
 **Size classes** decide how wide a piece hangs: `work--hero` (8 of 12 columns), `work--lg` (7), `work--md` (5), `work--sm` (4). Add `work--drop` to push a piece down and break the top line. Choosing these is the act of hanging the wall, so pick them by eye.
 
-Works are listed newest first. Aspect ratios are never cropped.
+Works are listed newest first, with sold pieces after the available ones. Aspect ratios are never cropped.
+
+That order lives in the markup rather than in CSS, because the lightbox builds its previous/next sequence by reading the gallery in document order - reordering visually with `order` would leave the arrows stepping through pieces in a sequence that no longer matches the wall.
 
 ## Translations
 
