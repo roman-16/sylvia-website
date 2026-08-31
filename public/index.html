@@ -75,7 +75,7 @@
 
         <div class="hero__art" aria-hidden="true">
           <picture>
-            <source media="(max-width: 63.99rem)" srcset="assets/img/hero-portrait.webp" width="750" height="1000" />
+            <source media="(max-width: 63.99rem)" srcset="assets/img/hero-portrait.webp" width="1008" height="756" />
             <img src="assets/works/04-silent-strength.webp" width="2000" height="1000" alt="" fetchpriority="high" />
           </picture>
         </div>
@@ -141,7 +141,34 @@
           </div>
 
           <div class="works" data-works>
-            <figure class="work work--hero" data-slug="silent-strength" data-medium="Acrylic on canvas" data-created="2024" data-width="60" data-height="30" data-category="realistic">
+            <figure class="work work--lg work--alpha" data-slug="ghostface" data-medium="Acrylic on canvas" data-created="2025" data-category="pop">
+              <a class="work__frame" href="assets/works/07-ghostface.webp">
+                <img
+                  src="assets/works/07-ghostface.webp"
+                  width="1864"
+                  height="1404"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Ghostface in a black hood on two offset canvases, a phone to the mask, “WAZZZ UP?” lettered beside the head."
+                  data-de-alt="Ghostface in schwarzer Kapuze auf zwei versetzten Leinwänden, ein Handy an der Maske, daneben der Schriftzug ‚WAZZZ UP?‘."
+                />
+              </a>
+              <figcaption class="work__caption">
+                <h3 class="work__title">Ghostface</h3>
+                <p class="meta work__facts">
+                  <span data-de="Acryl auf Leinwand">Acrylic on canvas</span> · 2025 · 2 × (60 × 30 cm)
+                </p>
+                <p class="meta work__status">
+                  <span class="tag tag--available" data-de="Verfügbar">Available</span>
+                  <span class="work__price" data-de="550 €">€550</span>
+                  <button type="button" class="enquire label" data-enquire="work" data-de="Anfragen">
+                    Enquire
+                  </button>
+                </p>
+              </figcaption>
+            </figure>
+
+            <figure class="work work--md work--drop" data-slug="silent-strength" data-medium="Acrylic on canvas" data-created="2024" data-width="60" data-height="30" data-category="realistic">
               <a class="work__frame" href="assets/works/04-silent-strength.webp">
                 <img
                   src="assets/works/04-silent-strength.webp"
@@ -168,7 +195,7 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--sm work--drop" data-slug="old-fashion" data-medium="Acrylic and oil on canvas" data-created="2024" data-width="30" data-height="40" data-category="abstract">
+            <figure class="work work--sm" data-slug="old-fashion" data-medium="Acrylic and oil on canvas" data-created="2024" data-width="30" data-height="40" data-category="abstract">
               <a class="work__frame" href="assets/works/01-old-fashion.webp">
                 <img
                   src="assets/works/01-old-fashion.webp"
@@ -195,7 +222,7 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--md" data-slug="overthinking" data-medium="Acrylic on canvas" data-created="2024" data-width="40" data-height="40" data-category="abstract">
+            <figure class="work work--hero work--drop" data-slug="overthinking" data-medium="Acrylic on canvas" data-created="2024" data-width="40" data-height="40" data-category="abstract">
               <a class="work__frame" href="assets/works/03-overthinking.webp">
                 <img
                   src="assets/works/03-overthinking.webp"
@@ -222,7 +249,7 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--lg work--drop" data-slug="raison-detre" data-medium="Acrylic and spray paint on canvas" data-created="2024" data-width="80" data-height="80" data-category="pop">
+            <figure class="work work--lg" data-slug="raison-detre" data-medium="Acrylic and spray paint on canvas" data-created="2024" data-width="80" data-height="80" data-category="pop">
               <a class="work__frame" href="assets/works/02-raison-detre.webp">
                 <img
                   src="assets/works/02-raison-detre.webp"
@@ -249,7 +276,7 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--lg" data-slug="kiteishvili" data-medium="Acrylic on canvas" data-created="2025" data-width="80" data-height="40" data-category="realistic">
+            <figure class="work work--md work--drop" data-slug="kiteishvili" data-medium="Acrylic on canvas" data-created="2025" data-width="80" data-height="40" data-category="realistic">
               <a class="work__frame" href="assets/works/06-kiteishvili.webp">
                 <img
                   src="assets/works/06-kiteishvili.webp"
@@ -272,7 +299,7 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--md work--drop" data-slug="federer" data-medium="Acrylic on canvas" data-created="2025" data-width="80" data-height="40" data-category="realistic">
+            <figure class="work work--lg" data-slug="federer" data-medium="Acrylic on canvas" data-created="2025" data-width="80" data-height="40" data-category="realistic">
               <a class="work__frame" href="assets/works/05-federer.webp">
                 <img
                   src="assets/works/05-federer.webp"
@@ -367,15 +394,23 @@
       </section>
 
       <figure class="band">
-        <img
-          src="assets/img/atelier.webp"
-          width="1170"
-          height="520"
-          loading="lazy"
-          decoding="async"
-          alt="The Roger Federer painting part way through, the racket still a pencil outline, a used palette beside it."
-          data-de-alt="Das Roger-Federer-Bild im Entstehen, der Schläger noch eine Bleistiftskizze, daneben eine benutzte Palette."
-        />
+        <picture>
+          <source
+            media="(max-width: 47.99rem)"
+            srcset="assets/img/atelier-tall.webp"
+            width="1170"
+            height="1300"
+          />
+          <img
+            src="assets/img/atelier.webp"
+            width="1170"
+            height="520"
+            loading="lazy"
+            decoding="async"
+            alt="A heavily loaded palette on the desk beside a laptop, and a round pink-and-white piece held in one hand."
+            data-de-alt="Eine dicht bestückte Palette auf dem Schreibtisch neben einem Laptop, dazu ein rundes rosa-weißes Stück in einer Hand."
+          />
+        </picture>
       </figure>
 
       <section id="commissions" class="bay" tabindex="-1">

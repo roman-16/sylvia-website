@@ -176,6 +176,8 @@ const setUpGallery = () => {
     const work = visible[index];
     const source = work.querySelector("img");
 
+    dialog.classList.toggle("is-alpha", work.classList.contains("work--alpha"));
+
     image.src = source.currentSrc || source.src;
     image.alt = source.alt;
     image.width = source.width;

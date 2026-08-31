@@ -632,6 +632,10 @@
     cursor: default;
   }
 
+  .work--alpha .work__frame {
+    background-color: transparent;
+  }
+
   .work__price {
     color: var(--color-ink);
   }
@@ -770,6 +774,10 @@
     -webkit-user-drag: none;
   }
 
+  .lightbox.is-alpha .lightbox__figure img {
+    box-shadow: none;
+  }
+
   .lightbox.is-zoomed .lightbox__figure img {
     cursor: grab;
   }
@@ -854,6 +862,10 @@
 
   .band {
     position: relative;
+  }
+
+  .band picture {
+    display: contents;
   }
 
   .band img {
