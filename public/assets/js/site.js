@@ -157,23 +157,21 @@ const setUpGallery = () => {
   if (!gallery || !dialog) return;
 
   const works = [...gallery.querySelectorAll(".work")];
-  const filters = [...document.querySelectorAll("[data-filter]")];
   const counter = document.querySelector("[data-count]");
   const image = dialog.querySelector("[data-lb-image]");
   const meta = dialog.querySelector("[data-lb-meta]");
   const position = dialog.querySelector("[data-lb-count]");
 
-  let visible = works;
   let index = 0;
 
   const roomForOverlay = window.matchMedia("(min-width: 48rem)");
 
   const renderCount = () => {
-    if (counter) counter.textContent = phrase("workCount", visible.length);
+    if (counter) counter.textContent = phrase("workCount", works.length);
   };
 
   const renderSlide = () => {
-    const work = visible[index];
+    const work = works[index];
     const source = work.querySelector("img");
 
     dialog.classList.toggle("is-alpha", work.classList.contains("work--alpha"));
@@ -189,7 +187,7 @@ const setUpGallery = () => {
     const status = [...work.querySelectorAll(".work__status > span")].map(flatten);
 
     meta.textContent = [title, facts, ...status].join(" · ");
-    position.textContent = `${String(index + 1).padStart(2, "0")} / ${String(visible.length).padStart(2, "0")}`;
+    position.textContent = `${String(index + 1).padStart(2, "0")} / ${String(works.length).padStart(2, "0")}`;
   };
 
   let scale = 1;
@@ -285,7 +283,7 @@ const setUpGallery = () => {
   });
 
   const open = (work) => {
-    index = Math.max(0, visible.indexOf(work));
+    index = Math.max(0, works.indexOf(work));
     resetZoom();
     renderSlide();
     if (!dialog.open) dialog.showModal();
@@ -293,23 +291,10 @@ const setUpGallery = () => {
   };
 
   const step = (delta) => {
-    index = (index + delta + visible.length) % visible.length;
+    index = (index + delta + works.length) % works.length;
     resetZoom();
     renderSlide();
   };
-
-  const applyFilter = (next) => {
-    visible = works.filter((work) => next === "all" || work.dataset.category === next);
-
-    for (const work of works) work.hidden = !visible.includes(work);
-    for (const button of filters) button.setAttribute("aria-pressed", String(button.dataset.filter === next));
-
-    renderCount();
-  };
-
-  for (const button of filters) {
-    button.addEventListener("click", () => applyFilter(button.dataset.filter));
-  }
 
   for (const work of works) {
     work.querySelector(".work__frame").addEventListener("click", (event) => {
@@ -381,7 +366,7 @@ const setUpGallery = () => {
   dialog.addEventListener("close", () => {
     document.documentElement.classList.remove("is-locked");
 
-    const frame = visible[index]?.querySelector(".work__frame");
+    const frame = works[index]?.querySelector(".work__frame");
     if (!frame) return;
 
     frame.focus({ preventScroll: true });
@@ -401,12 +386,12 @@ const setUpGallery = () => {
   });
 
   dialog.querySelector("[data-lb-enquire]").addEventListener("click", () => {
-    const slug = visible[index].dataset.slug;
+    const slug = works[index].dataset.slug;
     dialog.close();
     enquireAbout("work", slug);
   });
 
-  applyFilter("all");
+  renderCount();
 };
 
 const enquireAbout = (topic, slug) => {

@@ -257,28 +257,6 @@
     background-color: color-mix(in srgb, var(--color-bone) 8%, transparent);
   }
 
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid var(--color-line);
-    border-radius: 999px;
-    padding: 0.5rem 1.125rem;
-    color: var(--color-ash);
-    transition: border-color 200ms var(--ease-room), color 200ms var(--ease-room),
-      background-color 200ms var(--ease-room);
-  }
-
-  .pill:hover {
-    border-color: var(--color-ink);
-    color: var(--color-ink);
-  }
-
-  .pill[aria-pressed="true"] {
-    border-color: var(--color-ink);
-    background-color: var(--color-ink);
-    color: var(--color-bone);
-  }
-
   .rib {
     position: absolute;
     inset: 0;
@@ -552,21 +530,7 @@
     margin-block: clamp(2.5rem, 5vw, 4rem) 2rem;
   }
 
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .filter-bar__set {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .filter-bar__count {
+  .works-count {
     color: var(--color-ash);
   }
 
@@ -720,10 +684,6 @@
   .tag--sold {
     background-color: color-mix(in srgb, var(--color-ash) 15%, transparent);
     color: var(--color-ash);
-  }
-
-  .work[hidden] {
-    display: none;
   }
 
   .lightbox {

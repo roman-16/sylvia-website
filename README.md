@@ -67,7 +67,7 @@ When a piece sells, swap its `tag--available` span for `<span class="tag tag--so
 1. Put the photograph in `originals/paintings/`, named after the piece.
 2. Correct it to the canvas plane and write it to `public/assets/works/` as `NN-slug.webp`.
 3. Copy any `<figure class="work">` block in `public/index.html` and edit it.
-4. Set `data-slug`, `data-category` (`realistic`, `pop` or `abstract`), the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
+4. Set `data-slug`, the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
 
 Pieces are dated by year alone. Canvas sizes are written width × height, so a portrait canvas reads `30 × 40 cm` even when it is spoken of as a forty by thirty. Prices are shown in full: `€530` in English, `530 €` in German.
 
@@ -91,7 +91,7 @@ If you use `-distort` directly, set `-set option:distort:viewport WxH+0+0`. With
 
 **Strip metadata.** Phone photographs carry EXIF. `-strip` removes it. The images shipped before this was noticed still carry roughly 1.4 KB each; there is no GPS in them.
 
-Everything else follows on its own. The filter, the counter, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync.
+Everything else follows on its own. The counter, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync.
 
 **Size classes** decide how wide a piece hangs: `work--hero` (8 of 12 columns), `work--lg` (7), `work--md` (5), `work--sm` (4). Add `work--drop` to push a piece down and break the top line. Choosing these is the act of hanging the wall, so pick them by eye.
 
