@@ -62,18 +62,19 @@ const applyLanguage = (next) => {
 const rememberLanguage = (value) => {
   try {
     localStorage.setItem(STORAGE_KEY, value);
+  } catch {}
+};
+
+const storedLanguage = () => {
+  try {
+    return localStorage.getItem(STORAGE_KEY);
   } catch {
-    /* storage unavailable */
+    return null;
   }
 };
 
 const preferredLanguage = () => {
-  let stored = null;
-  try {
-    stored = localStorage.getItem(STORAGE_KEY);
-  } catch {
-    /* storage unavailable */
-  }
+  const stored = storedLanguage();
   if (LANGUAGES.includes(stored)) return stored;
 
   const primary = navigator.languages?.[0] ?? navigator.language ?? "";
@@ -151,12 +152,67 @@ const setUpReveals = () => {
   for (const element of revealed) observer.observe(element);
 };
 
+const createStepButton = (direction, label, alternateLabel) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = `work__step work__step--${direction}`;
+  button.setAttribute("aria-label", label);
+  button.dataset[datasetKey(ALTERNATE_LANGUAGE, "aria-label")] = alternateLabel;
+  button.innerHTML = `<svg aria-hidden="true" focusable="false"><use href="#${direction}" /></svg>`;
+  return button;
+};
+
+const showSlide = (slide, behavior) => {
+  const track = slide.parentElement;
+  track.scrollTo({ left: [...track.children].indexOf(slide) * track.clientWidth, behavior });
+};
+
+const setUpCarousels = () => {
+  const behavior = prefersReducedMotion() ? "auto" : "smooth";
+
+  for (const track of document.querySelectorAll("[data-track]")) {
+    const slides = [...track.children];
+    if (slides.length < 2) continue;
+
+    const previous = createStepButton("previous", "Previous image", "Vorheriges Bild");
+    const next = createStepButton("next", "Next image", "Nächstes Bild");
+    const dots = document.createElement("p");
+    dots.className = "work__dots";
+    dots.setAttribute("aria-hidden", "true");
+    dots.append(...slides.map(() => document.createElement("span")));
+    track.after(previous, next, dots);
+
+    const current = () => Math.round(track.scrollLeft / track.clientWidth);
+
+    const render = () => {
+      const index = current();
+      const focused = document.activeElement;
+
+      previous.hidden = index === 0;
+      next.hidden = index === slides.length - 1;
+      [...dots.children].forEach((dot, position) => dot.classList.toggle("is-current", position === index));
+
+      if (focused === previous && previous.hidden) next.focus();
+      if (focused === next && next.hidden) previous.focus();
+    };
+
+    previous.addEventListener("click", () => showSlide(slides[current() - 1], behavior));
+    next.addEventListener("click", () => showSlide(slides[current() + 1], behavior));
+    track.addEventListener("scroll", () => requestAnimationFrame(render), { passive: true });
+
+    render();
+  }
+};
+
 const setUpGallery = () => {
   const gallery = document.querySelector("[data-works]");
   const dialog = document.querySelector("[data-lightbox]");
   if (!gallery || !dialog) return;
 
   const works = [...gallery.querySelectorAll(".work")];
+  const pictures = works.flatMap((work) =>
+    [...work.querySelectorAll(".work__slide")].map((slide) => ({ slide, work })),
+  );
   const counter = document.querySelector("[data-count]");
   const image = dialog.querySelector("[data-lb-image]");
   const meta = dialog.querySelector("[data-lb-meta]");
@@ -171,10 +227,8 @@ const setUpGallery = () => {
   };
 
   const renderSlide = () => {
-    const work = works[index];
-    const source = work.querySelector("img");
-
-    dialog.classList.toggle("is-alpha", work.classList.contains("work--alpha"));
+    const { slide, work } = pictures[index];
+    const source = slide.querySelector("img");
 
     image.src = source.currentSrc || source.src;
     image.alt = source.alt;
@@ -186,8 +240,10 @@ const setUpGallery = () => {
     const facts = flatten(work.querySelector(".work__facts"));
     const status = [...work.querySelectorAll(".work__status > span")].map(flatten);
 
+    const pad = (number) => String(number).padStart(2, "0");
+
     meta.textContent = [title, facts, ...status].join(" · ");
-    position.textContent = `${String(index + 1).padStart(2, "0")} / ${String(works.length).padStart(2, "0")}`;
+    position.textContent = `${pad(works.indexOf(work) + 1)} / ${pad(works.length)}`;
   };
 
   let scale = 1;
@@ -282,8 +338,8 @@ const setUpGallery = () => {
     image.addEventListener("pointercancel", drop);
   });
 
-  const open = (work) => {
-    index = Math.max(0, works.indexOf(work));
+  const open = (slide) => {
+    index = Math.max(0, pictures.findIndex((picture) => picture.slide === slide));
     resetZoom();
     renderSlide();
     if (!dialog.open) dialog.showModal();
@@ -291,15 +347,15 @@ const setUpGallery = () => {
   };
 
   const step = (delta) => {
-    index = (index + delta + works.length) % works.length;
+    index = (index + delta + pictures.length) % pictures.length;
     resetZoom();
     renderSlide();
   };
 
-  for (const work of works) {
-    work.querySelector(".work__frame").addEventListener("click", (event) => {
+  for (const { slide } of pictures) {
+    slide.addEventListener("click", (event) => {
       event.preventDefault();
-      if (roomForOverlay.matches) open(work);
+      if (roomForOverlay.matches) open(slide);
     });
   }
 
@@ -366,13 +422,14 @@ const setUpGallery = () => {
   dialog.addEventListener("close", () => {
     document.documentElement.classList.remove("is-locked");
 
-    const frame = works[index]?.querySelector(".work__frame");
-    if (!frame) return;
+    const slide = pictures[index]?.slide;
+    if (!slide) return;
 
-    frame.focus({ preventScroll: true });
+    showSlide(slide, "instant");
+    slide.focus({ preventScroll: true });
 
-    const box = frame.getBoundingClientRect();
-    if (box.bottom < 0 || box.top > window.innerHeight) frame.scrollIntoView({ block: "center" });
+    const box = slide.getBoundingClientRect();
+    if (box.bottom < 0 || box.top > window.innerHeight) slide.scrollIntoView({ block: "center" });
   });
 
   dialog.addEventListener("keydown", (event) => {
@@ -386,7 +443,7 @@ const setUpGallery = () => {
   });
 
   dialog.querySelector("[data-lb-enquire]").addEventListener("click", () => {
-    const slug = works[index].dataset.slug;
+    const slug = pictures[index].work.dataset.slug;
     dialog.close();
     enquireAbout("work", slug);
   });
@@ -537,6 +594,7 @@ setUpLanguage();
 setUpInPageLinks();
 setUpHeader();
 setUpReveals();
+setUpCarousels();
 setUpGallery();
 setUpContact();
 setUpStructuredData();

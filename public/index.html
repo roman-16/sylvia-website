@@ -11,7 +11,7 @@
       content="Sylvia Pasmangiu paints with acrylic and oil on canvas. Realistic, sometimes abstract. Every piece one of a kind."
       data-de-content="Sylvia Pasmangiu malt mit Acryl und Öl auf Leinwand. Realistisch, manchmal abstrakt. Jedes Bild ein Unikat."
     />
-    <meta name="theme-color" content="#141210" />
+    <meta name="theme-color" content="#c5b8a8" />
     <link rel="canonical" href="https://sylviapasmangiu.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://sylviapasmangiu.com/" />
@@ -47,6 +47,8 @@
           <path d="M41 61.5c.5 38.5-.5 93.5-1.6 133.5" />
         </g>
       </symbol>
+      <symbol id="next" viewBox="0 0 24 24"><path d="M9 4l8 8-8 8" /></symbol>
+      <symbol id="previous" viewBox="0 0 24 24"><path d="M15 4L7 12l8 8" /></symbol>
     </svg>
 
     <header class="site-header" data-header>
@@ -71,13 +73,8 @@
 
     <main id="top" tabindex="-1">
       <section class="hero">
-        <div class="hero__glow" aria-hidden="true"></div>
-
         <div class="hero__art" aria-hidden="true">
-          <picture>
-            <source media="(max-width: 63.99rem)" srcset="assets/img/hero-portrait.webp" width="1008" height="756" />
-            <img src="assets/works/04-silent-strength.webp" width="2000" height="1000" alt="" fetchpriority="high" />
-          </picture>
+          <img src="assets/img/hero.webp" width="1448" height="1086" alt="" fetchpriority="high" />
         </div>
 
         <div class="wrap hero__inner" data-stagger>
@@ -95,12 +92,10 @@
         </div>
 
         <div class="wrap hero__foot label">
-          <p class="dim" data-de="Österreich">Austria</p>
-          <p class="dim hero__cue" data-de="Scrollen">Scroll</p>
+          <p data-de="Österreich">Austria</p>
+          <p class="hero__cue" data-de="Scrollen">Scroll</p>
         </div>
       </section>
-
-      <div class="band-dawn" aria-hidden="true"></div>
 
       <section id="works" class="bay" tabindex="-1">
         <div class="wrap">
@@ -122,45 +117,33 @@
           <p class="label works-count" data-count></p>
 
           <div class="works" data-works>
-            <figure class="work work--lg work--alpha" data-slug="ghostface" data-medium="Acrylic on canvas" data-created="2025">
-              <a class="work__frame" href="assets/works/05-ghostface.webp">
-                <img
-                  src="assets/works/05-ghostface.webp"
-                  width="1864"
-                  height="1404"
-                  loading="lazy"
-                  decoding="async"
-                  alt="Ghostface in a black hood on two offset canvases, a phone to the mask, “WAZZZ UP?” lettered beside the head."
-                  data-de-alt="Ghostface in schwarzer Kapuze auf zwei versetzten Leinwänden, ein Handy an der Maske, daneben der Schriftzug ‚WAZZZ UP?‘."
-                />
-              </a>
-              <figcaption class="work__caption">
-                <h3 class="work__title">Ghostface</h3>
-                <p class="meta work__facts">
-                  <span data-de="Acryl auf Leinwand">Acrylic on canvas</span> · 2025 · 2 × (60 × 30 cm)
-                </p>
-                <p class="meta work__status">
-                  <span class="tag tag--available" data-de="Verfügbar">Available</span>
-                  <span class="work__price" data-de="550 €">€550</span>
-                  <button type="button" class="enquire label" data-enquire="work" data-de="Anfragen">
-                    Enquire
-                  </button>
-                </p>
-              </figcaption>
-            </figure>
-
-            <figure class="work work--md work--drop" data-slug="silent-strength" data-medium="Acrylic on canvas" data-created="2024" data-width="60" data-height="30">
-              <a class="work__frame" href="assets/works/04-silent-strength.webp">
-                <img
-                  src="assets/works/04-silent-strength.webp"
-                  width="2000"
-                  height="1000"
-                  loading="lazy"
-                  decoding="async"
-                  alt="A black panther in darkness, only the amber eyes and the whiskers catching the light."
-                  data-de-alt="Ein schwarzer Panther im Dunkeln, nur die bernsteinfarbenen Augen und die Schnurrhaare fangen das Licht."
-                />
-              </a>
+            <figure class="work work--lg" data-slug="silent-strength" data-medium="Acrylic on canvas" data-created="2024" data-width="60" data-height="30">
+              <div class="work__frame">
+                <div class="work__track" data-track>
+                  <a class="work__slide" href="assets/works/04-silent-strength.webp">
+                    <img
+                      src="assets/works/04-silent-strength.webp"
+                      width="2000"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="A black panther in darkness, only the amber eyes and the whiskers catching the light."
+                      data-de-alt="Ein schwarzer Panther im Dunkeln, nur die bernsteinfarbenen Augen und die Schnurrhaare fangen das Licht."
+                    />
+                  </a>
+                  <a class="work__slide" href="assets/works/04-silent-strength-room.webp">
+                    <img
+                      src="assets/works/04-silent-strength-room.webp"
+                      width="1448"
+                      height="724"
+                      loading="lazy"
+                      decoding="async"
+                      alt="“Silent Strength” above a light oak sideboard, between a vase of olive branches and a linen lamp."
+                      data-de-alt="„Silent Strength“ über einem hellen Eichen-Sideboard, zwischen einer Vase mit Olivenzweigen und einer Leinenlampe."
+                    />
+                  </a>
+                </div>
+              </div>
               <figcaption class="work__caption">
                 <h3 class="work__title">Silent Strength</h3>
                 <p class="meta work__facts">
@@ -176,26 +159,41 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--sm" data-slug="old-fashion" data-medium="Acrylic and oil on canvas" data-created="2024" data-width="30" data-height="40">
-              <a class="work__frame" href="assets/works/01-old-fashion.webp">
-                <img
-                  src="assets/works/01-old-fashion.webp"
-                  width="810"
-                  height="1080"
-                  loading="lazy"
-                  decoding="async"
-                  alt="Profile portrait of a man in a flat cap with a cigarette, in greys on a terracotta background."
-                  data-de-alt="Porträt eines Mannes mit Schiebermütze und Zigarette im Profil, in Grautönen vor terrakottafarbenem Hintergrund."
-                />
-              </a>
+            <figure class="work work--md work--right work--drop" data-slug="raison-detre" data-medium="Acrylic and spray paint on canvas" data-created="2024" data-width="80" data-height="80">
+              <div class="work__frame">
+                <div class="work__track" data-track>
+                  <a class="work__slide" href="assets/works/02-raison-detre.webp">
+                    <img
+                      src="assets/works/02-raison-detre.webp"
+                      width="1600"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async"
+                      alt="The words “Raison d’être” in graffiti lettering, framed by large green leaves."
+                      data-de-alt="Der Schriftzug „Raison d’être“ in Graffiti-Lettern, umrahmt von großen grünen Blättern."
+                    />
+                  </a>
+                  <a class="work__slide" href="assets/works/02-raison-detre-room.webp">
+                    <img
+                      src="assets/works/02-raison-detre-room.webp"
+                      width="1180"
+                      height="1180"
+                      loading="lazy"
+                      decoding="async"
+                      alt="“Raison d’être” above an oak sideboard, a potted plant trailing over its edge."
+                      data-de-alt="„Raison d’être“ über einem Eichen-Sideboard, an dessen Kante eine Topfpflanze herabhängt."
+                    />
+                  </a>
+                </div>
+              </div>
               <figcaption class="work__caption">
-                <h3 class="work__title">Old Fashion</h3>
+                <h3 class="work__title">Raison d’être</h3>
                 <p class="meta work__facts">
-                  <span data-de="Acryl und Öl auf Leinwand">Acrylic and oil on canvas</span> · 2024 · 30 × 40 cm
+                  <span data-de="Acryl und Sprühfarbe auf Leinwand">Acrylic and spray paint on canvas</span> · 2024 · 80 × 80 cm
                 </p>
                 <p class="meta work__status">
                   <span class="tag tag--available" data-de="Verfügbar">Available</span>
-                  <span class="work__price" data-de="450 €">€450</span>
+                  <span class="work__price" data-de="800 €">€800</span>
                   <button type="button" class="enquire label" data-enquire="work" data-de="Anfragen">
                     Enquire
                   </button>
@@ -203,18 +201,33 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--hero work--drop" data-slug="overthinking" data-medium="Acrylic on canvas" data-created="2024" data-width="40" data-height="40">
-              <a class="work__frame" href="assets/works/03-overthinking.webp">
-                <img
-                  src="assets/works/03-overthinking.webp"
-                  width="1400"
-                  height="1400"
-                  loading="lazy"
-                  decoding="async"
-                  alt="A figure in glossy green with hard black outlines on a grey background."
-                  data-de-alt="Eine Figur in glänzendem Grün mit harten schwarzen Konturen vor grauem Hintergrund."
-                />
-              </a>
+            <figure class="work work--md" data-slug="overthinking" data-medium="Acrylic on canvas" data-created="2024" data-width="40" data-height="40">
+              <div class="work__frame">
+                <div class="work__track" data-track>
+                  <a class="work__slide" href="assets/works/03-overthinking.webp">
+                    <img
+                      src="assets/works/03-overthinking.webp"
+                      width="1400"
+                      height="1400"
+                      loading="lazy"
+                      decoding="async"
+                      alt="A figure in glossy green with hard black outlines on a grey background."
+                      data-de-alt="Eine Figur in glänzendem Grün mit harten schwarzen Konturen vor grauem Hintergrund."
+                    />
+                  </a>
+                  <a class="work__slide" href="assets/works/03-overthinking-room.webp">
+                    <img
+                      src="assets/works/03-overthinking-room.webp"
+                      width="1086"
+                      height="1086"
+                      loading="lazy"
+                      decoding="async"
+                      alt="“Overthinking” on a cream wall above a console table with dried flowers and a lamp."
+                      data-de-alt="„Overthinking“ an einer cremefarbenen Wand über einem Konsolentisch mit Trockenblumen und einer Lampe."
+                    />
+                  </a>
+                </div>
+              </div>
               <figcaption class="work__caption">
                 <h3 class="work__title">Overthinking</h3>
                 <p class="meta work__facts">
@@ -230,26 +243,41 @@
               </figcaption>
             </figure>
 
-            <figure class="work work--lg" data-slug="raison-detre" data-medium="Acrylic and spray paint on canvas" data-created="2024" data-width="80" data-height="80">
-              <a class="work__frame" href="assets/works/02-raison-detre.webp">
-                <img
-                  src="assets/works/02-raison-detre.webp"
-                  width="1600"
-                  height="1600"
-                  loading="lazy"
-                  decoding="async"
-                  alt="The words “Raison d’être” in graffiti lettering, framed by large green leaves."
-                  data-de-alt="Der Schriftzug „Raison d’être“ in Graffiti-Lettern, umrahmt von großen grünen Blättern."
-                />
-              </a>
+            <figure class="work work--sm work--right work--drop" data-slug="old-fashion" data-medium="Acrylic and oil on canvas" data-created="2024" data-width="30" data-height="40">
+              <div class="work__frame">
+                <div class="work__track" data-track>
+                  <a class="work__slide" href="assets/works/01-old-fashion.webp">
+                    <img
+                      src="assets/works/01-old-fashion.webp"
+                      width="810"
+                      height="1080"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Profile portrait of a man in a flat cap with a cigarette, in greys on a terracotta background."
+                      data-de-alt="Porträt eines Mannes mit Schiebermütze und Zigarette im Profil, in Grautönen vor terrakottafarbenem Hintergrund."
+                    />
+                  </a>
+                  <a class="work__slide" href="assets/works/01-old-fashion-room.webp">
+                    <img
+                      src="assets/works/01-old-fashion-room.webp"
+                      width="1086"
+                      height="1448"
+                      loading="lazy"
+                      decoding="async"
+                      alt="“Old Fashion” beside a linen curtain, above a side table with a candle and an olive branch."
+                      data-de-alt="„Old Fashion“ neben einem Leinenvorhang, über einem Beistelltisch mit Kerze und Olivenzweig."
+                    />
+                  </a>
+                </div>
+              </div>
               <figcaption class="work__caption">
-                <h3 class="work__title">Raison d’être</h3>
+                <h3 class="work__title">Old Fashion</h3>
                 <p class="meta work__facts">
-                  <span data-de="Acryl und Sprühfarbe auf Leinwand">Acrylic and spray paint on canvas</span> · 2024 · 80 × 80 cm
+                  <span data-de="Acryl und Öl auf Leinwand">Acrylic and oil on canvas</span> · 2024 · 30 × 40 cm
                 </p>
                 <p class="meta work__status">
                   <span class="tag tag--available" data-de="Verfügbar">Available</span>
-                  <span class="work__price" data-de="800 €">€800</span>
+                  <span class="work__price" data-de="450 €">€450</span>
                   <button type="button" class="enquire label" data-enquire="work" data-de="Anfragen">
                     Enquire
                   </button>
@@ -272,7 +300,7 @@
         />
       </figure>
 
-      <section id="about" class="bay about" tabindex="-1">
+      <section id="about" class="bay" tabindex="-1">
         <div class="wrap">
           <div class="section-head" data-stagger>
             <div class="section-head__meta">
@@ -429,7 +457,7 @@
             <form class="form" data-form action="https://api.web3forms.com/submit" method="POST">
               <input type="hidden" name="access_key" value="762f6856-2120-43aa-9d94-b92635ca86e6" />
               <input type="hidden" name="subject" data-form-subject />
-              <input type="hidden" name="from_name" value="sylviapasmangiu.at" />
+              <input type="hidden" name="from_name" value="sylviapasmangiu.com" />
               <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" />
 
               <fieldset class="field field--topic">
@@ -552,8 +580,6 @@
     </footer>
 
     <dialog class="lightbox" data-lightbox aria-label="Image view" data-de-aria-label="Bildansicht">
-      <div class="lightbox__glow" aria-hidden="true"></div>
-
       <button type="button" class="lightbox__close" data-lb-close aria-label="Close" data-de-aria-label="Schließen">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" /></svg>
       </button>
@@ -565,7 +591,7 @@
         aria-label="Previous image"
         data-de-aria-label="Vorheriges Bild"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4L7 12l8 8" /></svg>
+        <svg aria-hidden="true" focusable="false"><use href="#previous" /></svg>
       </button>
 
       <button
@@ -575,7 +601,7 @@
         aria-label="Next image"
         data-de-aria-label="Nächstes Bild"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8" /></svg>
+        <svg aria-hidden="true" focusable="false"><use href="#next" /></svg>
       </button>
 
       <figure class="lightbox__figure">

@@ -7,7 +7,7 @@ Static website for the painter Sylvia Pasmangiu. Three pages, no framework, no r
 ```
 public/     everything that gets served, and nothing else
 src/        Tailwind source
-originals/  the photographs the gallery images are made from
+originals/  the photographs and room pictures the site images are made from
 .github/    deployment workflow
 ```
 
@@ -66,8 +66,9 @@ When a piece sells, swap its `tag--available` span for `<span class="tag tag--so
 
 1. Put the photograph in `originals/paintings/`, named after the piece.
 2. Correct it to the canvas plane and write it to `public/assets/works/` as `NN-slug.webp`.
-3. Copy any `<figure class="work">` block in `public/index.html` and edit it.
-4. Set `data-slug`, the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
+3. Put the room picture from Sylvia's Instagram post in `originals/rooms/`, named after the piece. Crop it to the painting's own aspect ratio, keeping the painting in view, and write it to `public/assets/works/` as `NN-slug-room.webp`.
+4. Copy any `<figure class="work">` block in `public/index.html` and edit it. The painting is the first `work__slide`, the room picture the second.
+5. Set `data-slug`, the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
 
 Pieces are dated by year alone. Canvas sizes are written width × height, so a portrait canvas reads `30 × 40 cm` even when it is spoken of as a forty by thirty. Prices are shown in full: `€530` in English, `530 €` in German.
 
@@ -91,13 +92,15 @@ If you use `-distort` directly, set `-set option:distort:viewport WxH+0+0`. With
 
 **Strip metadata.** Phone photographs carry EXIF. `-strip` removes it. The images shipped before this was noticed still carry roughly 1.4 KB each; there is no GPS in them.
 
-Everything else follows on its own. The counter, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync.
+Everything else follows on its own. The counter, the arrows and dots on each frame, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync. A piece with a single slide gets no arrows.
 
-**Size classes** decide how wide a piece hangs: `work--hero` (8 of 12 columns), `work--lg` (7), `work--md` (5), `work--sm` (4). Add `work--drop` to push a piece down and break the top line. Choosing these is the act of hanging the wall, so pick them by eye.
+**Pictures.** Each frame is a horizontal scroll strip that snaps picture by picture, so phones swipe it natively and the arrows only scroll it. Every picture of a piece shares the painting's aspect ratio, so the frame never changes size between them. The painting photograph is never cropped; the room picture is cropped to fit it, the way Instagram crops a post.
 
-Works are listed newest first, with sold pieces after the available ones. Aspect ratios are never cropped.
+**Size classes** decide how wide a piece hangs: `work--lg` (6 of 12 columns), `work--md` (5), `work--sm` (4). Add `work--right` to hang a piece flush with the right edge, and `work--drop` to push it down and break the top line. Choosing these is the act of hanging the wall, so pick them by eye. Nothing hangs wider than half the wall, so no painting fills the screen.
 
-That order lives in the markup rather than in CSS, because the lightbox builds its previous/next sequence by reading the gallery in document order - reordering visually with `order` would leave the arrows stepping through pieces in a sequence that no longer matches the wall.
+Works hang in the order of Sylvia's Instagram feed, newest post first. Pieces she has not posted follow, and sold pieces come last.
+
+That order lives in the markup rather than in CSS, because the lightbox builds its previous/next sequence by reading the gallery in document order, picture by picture - reordering visually with `order` would leave the arrows stepping through pieces in a sequence that no longer matches the wall.
 
 ## Translations
 
