@@ -11,7 +11,7 @@ Every painting on the site is shown twice, in the same shape: the painting itsel
 
 ```console
 $ bun .agents/skills/pictures/scripts/canvas.ts rectify PHOTO --corners X,Y X,Y X,Y X,Y --size WxH --out FILE [--inset T,R,B,L] [--max PX]
-$ bun .agents/skills/pictures/scripts/canvas.ts hang ROOM PAINTING --corners X,Y X,Y X,Y X,Y --out FILE [--bleed PX]
+$ bun .agents/skills/pictures/scripts/canvas.ts hang ROOM PAINTING --corners X,Y X,Y X,Y X,Y --out FILE [--bleed PX] [--whole]
 $ bun .agents/skills/pictures/scripts/canvas.ts edges IMAGE [--sheet FILE]
 ```
 
@@ -90,6 +90,7 @@ A room picture has the painting's exact proportions, so the frame never changes 
 
    It finds the blank canvas's edges, refuses when its shape is more than 2% off the painting's, maps the painting onto it a pixel past its rim (`--bleed`), and multiplies it by the blank canvas's own light, scaled so its brightest point stays as painted, so the room's sun and falloff land on the paint. Then it crops the room to the painting's proportions around the painting.
 5. A refusal means the model drew the wrong shape: `revise` the room with the exact ratio. A better photo of the painting later reruns `hang` on the same room, with no new generation.
+6. A copy of the room to share outside the site keeps the room's own frame: `hang` with `--whole` and a `.jpg` output, written to `/tmp`.
 
 The alt text describes where the painting hangs, never whose home it is.
 
@@ -97,7 +98,7 @@ The alt text describes where the painting hangs, never whose home it is.
 
 | Slot | File | Shape | Rule |
 | --- | --- | --- | --- |
-| Portrait | `img/portrait.webp` | 4:5 | Clipped to an oval that cuts the corners hard, so the face sits well inside it, not at an edge. About 410 px wide on a desktop, the full width on a phone |
+| Portrait | `img/portrait.webp` | 4:5 | Clipped to an oval that cuts the corners hard, so the face sits well inside it, not at an edge. Whatever stands behind the person reaches the oval's top; a strip of wall above it leaves the person looking lost at the bottom. About 410 px wide on a desktop, the full width on a phone |
 | Hero | `img/hero.webp` | 4:3 | A room picture, shown whole at the right half of the first screen on a desktop and full width on a phone |
 | Atelier band | `img/atelier.webp`, `img/atelier-tall.webp` | 2080 × 924, 1170 × 1170 | Full window width; the square one replaces it below 48rem. A source narrower than about 2000 px upscales visibly here |
 | In-situ | `img/insitu.webp` | 1100 × 1428 | A framed photo at most 32rem wide |

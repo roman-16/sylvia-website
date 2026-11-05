@@ -16,7 +16,7 @@ const WEBP = ["-quality", "82", "-define", "webp:method=6"];
 
 const USAGE = `usage:
   bun canvas.ts rectify PHOTO --corners X,Y X,Y X,Y X,Y --size WxH --out FILE [--inset T,R,B,L] [--max PX]
-  bun canvas.ts hang ROOM PAINTING --corners X,Y X,Y X,Y X,Y --out FILE [--bleed PX]
+  bun canvas.ts hang ROOM PAINTING --corners X,Y X,Y X,Y X,Y --out FILE [--bleed PX] [--whole]
   bun canvas.ts edges IMAGE [--sheet FILE]
 
 Corners run top-left, top-right, bottom-right, bottom-left, in pixels of the image as magick -auto-orient shows it.
@@ -195,7 +195,7 @@ const parseArguments = (argv: string[]) => {
       positional.push(argument);
       continue;
     }
-    const count = argument === "--corners" ? 4 : 1;
+    const count = argument === "--corners" ? 4 : argument === "--whole" ? 0 : 1;
     options[argument.slice(2)] = argv.slice(index + 1, index + 1 + count);
     index += count;
   }
@@ -342,7 +342,7 @@ const hang = (room: string, painting: string, options: Record<string, string[]>)
     [{ x: art.width, y: art.height }, corners[2]],
     [{ x: 0, y: art.height }, corners[3]],
   ].map(([source, target]) => `${round(source)} ${continuous(target)}`).join(" ");
-  const aspect = art.width / art.height;
+  const aspect = "whole" in options ? image.width / image.height : art.width / art.height;
   const wide = image.width / image.height > aspect;
   const cropWidth = wide ? Math.round(image.height * aspect) : image.width;
   const cropHeight = wide ? image.height : Math.round(image.width / aspect);
