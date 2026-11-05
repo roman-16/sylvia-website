@@ -8,6 +8,7 @@ Static website for the painter Sylvia Pasmangiu. Three pages, no framework, no r
 public/     everything that gets served, and nothing else
 src/        Tailwind source
 originals/  the photographs and room pictures the site images are made from
+.agents/    the pictures skill: how every site image is made from what arrives
 .github/    deployment workflow
 ```
 
@@ -62,35 +63,17 @@ One-time setup in the repository:
 
 When a piece sells, swap its `tag--available` span for `<span class="tag tag--sold" data-de="Verkauft">Sold</span>`, delete its price and its Enquire button, and move its figure below the available pieces. The contact form drops sold pieces from its dropdown on its own.
 
+## Removing a painting
+
+Delete its `<figure class="work">` and its two files in `public/assets/works/`. Its sources stay in `originals/`. Nothing else on the site names it afterwards, alt texts and file names included.
+
 ## Adding a painting
 
-1. Put the photograph in `originals/paintings/`, named after the piece.
-2. Correct it to the canvas plane and write it to `public/assets/works/` as `NN-slug.webp`.
-3. Put the room picture from Sylvia's Instagram post in `originals/rooms/`, named after the piece. Crop it to the painting's own aspect ratio, keeping the painting in view, and write it to `public/assets/works/` as `NN-slug-room.webp`.
-4. Copy any `<figure class="work">` block in `public/index.html` and edit it. The painting is the first `work__slide`, the room picture the second.
-5. Set `data-slug`, the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
+1. Make its two pictures with the `pictures` skill in `.agents/skills/pictures/`: the painting as `public/assets/works/NN-slug.webp` and its room picture as `NN-slug-room.webp`, their sources in `originals/`.
+2. Copy any `<figure class="work">` block in `public/index.html` and edit it. The painting is the first `work__slide`, the room picture the second.
+3. Set `data-slug`, the size class, and `data-medium` / `data-created` / `data-width` / `data-height` for the structured data. Leave `data-width` and `data-height` off until the canvas is measured; the structured data omits them rather than guessing.
 
 Pieces are dated by year alone. Canvas sizes are written width × height, so a portrait canvas reads `30 × 40 cm` even when it is spoken of as a forty by thirty. Prices are shown in full: `€530` in English, `530 €` in German.
-
-**Correcting a photograph.** A phone is never exactly square-on to a canvas, so the photograph keystones and opposite edges of the painting come out different lengths. Cropping cannot fix that, because the shape is wrong rather than the framing.
-
-A four-corner perspective map is the obvious answer and it is not enough. It maps straight lines to straight lines, so it cannot correct two things that are present in these photographs: the phone's mild barrel distortion, and canvases that are physically bowed on their stretchers. Two paintings shot in the same frame wanted opposite lens corrections, which is how you can tell the bow is in the canvas rather than the optics.
-
-What produced the images in `public/assets/works/` was, per painting:
-
-1. Detect the canvas boundary in the source photograph by walking the intensity gradient inward along each edge.
-2. Sample around sixty points around that boundary rather than just the four corners.
-3. Fit a cubic polynomial mapping those points onto a true rectangle, and render it with `magick -distort Polynomial`. This absorbs perspective, lens and canvas bow together.
-4. Inset each edge independently until no wall survives, checking each edge separately - a single average across an edge hides a wedge of wall at one end.
-5. Convert with `-strip -quality 82 -define webp:method=6`.
-
-Insets must be per-edge and per-painting, because each photograph has its own magnification. On a canvas rendered at 2000x1000 from a source where it measured 740x360, one source pixel of inset costs nearly three output pixels, which is enough to cut a signature off the bottom edge.
-
-Check the result along every edge before shipping it. A brightness test alone will miss an edge that is *darker* than the painting, which is what a canvas edge in shadow looks like.
-
-If you use `-distort` directly, set `-set option:distort:viewport WxH+0+0`. Without it the result is clipped to the source photograph's dimensions, silently cropping the output whenever the target is larger than the original.
-
-**Strip metadata.** Phone photographs carry EXIF. `-strip` removes it. The images shipped before this was noticed still carry roughly 1.4 KB each; there is no GPS in them.
 
 Everything else follows on its own. The counter, the arrows and dots on each frame, the lightbox, the contact form dropdown and the JSON-LD all read the gallery out of the page, so there is no second list to keep in sync. A piece with a single slide gets no arrows.
 
